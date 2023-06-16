@@ -15,11 +15,11 @@ Stretch Goals:
 
 Current Progress: (not final and will be changing future steps as I realize I'm bad at planning)
 
-1: Planinng <----
-2: Basic Database Creation
-3: Setup Queries
-4: Create a function that returns a mon with all information that the heroku dex would return
-5: Create function that return a readable output out of the previous function
-6: Finish Database Setup
+1: Planinng <---- \n
+2: Basic Database Creation\n
+3: Setup Queries\n
+4: Create a function that returns a mon with all information that the heroku dex would return\n
+5: Create function that return a readable output out of the previous function\n
+6: Finish Database Setup\n
 
 7: Start Stretch goals (expand when I get here)
