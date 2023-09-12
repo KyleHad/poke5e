@@ -15,16 +15,20 @@ Stretch Goals:
 
 Current Progress: (not final and will be changing future steps as I realize I'm bad at planning)
 
-1: Planinng <---- 
+1: Planing
 
-2: Basic Database Creation
+2: Scraper PoC <-----
 
-3: Setup Queries
+3: Database Creation (IaC) Postgres
 
-4: Create a function that returns a mon with all information that the heroku dex would return
+4: Setup Queries
 
-5: Create function that return a readable output out of the previous function
+5: Create a function that returns a mon with all information that the heroku dex would return
 
-6: Finish Database Setup
+6: Create function that return a readable output out of the previous function
 
-7: Start Stretch goals (expand when I get here)
+7: Create full scraper
+
+8: Finish Database Setup
+
+9: Start Stretch goals (see above)
