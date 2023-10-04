@@ -5,7 +5,6 @@ describe('puppeteer', () => {
 
     afterEach(() => {
         if (fs.existsSync(filePath)) {
-            // Delete the file using fs.unlinkSync()
             fs.unlinkSync(filePath);
         }
     })
