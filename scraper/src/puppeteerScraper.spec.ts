@@ -1,11 +1,22 @@
 import fs from 'fs';
-import {puppeteerScraper} from "./puppeteerScraper";
+import {PokeScrapper} from "./puppeteerScraper";
 
 const paths = ['site.png', 'bulba.png']
 
 describe('puppeteer', () => {
     const basePath = 'src/screenshots/'
+    let pokeScrapper: PokeScrapper
 
+
+    beforeAll(() => {
+        if(!fs.existsSync('src/screenshots')){
+            fs.mkdirSync('src/screenshots')
+        }
+    })
+
+    beforeEach(async () => {
+        pokeScrapper = await PokeScrapper.startUp()
+    })
 
     afterAll(() => {
        paths.forEach((path) => {
@@ -15,69 +26,49 @@ describe('puppeteer', () => {
        })
 
     })
-    it('should take a screenshot', async () => {
-        const browser = await puppeteerScraper()
-        const page = await browser.newPage();
-
-        const filePath = basePath + 'site.png'
-
-        await page.goto('https://pokedex-5e.herokuapp.com/');
-        await page.screenshot({ path: filePath, optimizeForSpeed: true });
-        await browser.close();
-
-
-        expect(fs.existsSync(filePath)).toBeTruthy()
-    }, 20000)
 
     it('should type into search bar then click on the first result', async () => {
-        const browser = await puppeteerScraper()
-        const page = await browser.newPage();
 
         const bulbaPath = basePath + "bulba.png"
 
-        await page.goto('https://pokedex-5e.herokuapp.com/');
-        await page.type('input[type="text"]', 'bulba');
-        await page.click('div > .space-y-4')
-        await page.screenshot({ path: bulbaPath, optimizeForSpeed: true });
-        await browser.close();
+        await pokeScrapper.page.type('input[type="text"]', 'bulba');
+        await pokeScrapper.page.click('div > .space-y-4')
+        await pokeScrapper.page.screenshot({ path: bulbaPath, optimizeForSpeed: true });
+
+        await pokeScrapper.close()
 
         expect(fs.existsSync(bulbaPath)).toBeTruthy()
     }, 20000)
 
     it('should grab the text from the title of the monster entry', async () => {
-        const browser = await puppeteerScraper()
-        const page = await browser.newPage();
+        await pokeScrapper.page.type('input[type="text"]', 'bulba');
+        await pokeScrapper.page.click('div > .space-y-4')
 
-        await page.goto('https://pokedex-5e.herokuapp.com/');
-        await page.type('input[type="text"]', 'bulba');
-        await page.click('div > .space-y-4')
+        const element = await pokeScrapper.page.$('div > .text-3xl.font-extrabold')
+        const text = await pokeScrapper.page.evaluate(el => el.textContent, element)
 
-        const element = await page.$('div > .text-3xl.font-extrabold')
-        const text = await page.evaluate(el => el.textContent, element)
-        await browser.close();
-
+        await pokeScrapper.close()
 
         expect(text).toBe('Bulbasaur #1')
     }, 20000)
 
     //TODO:
     it('should grab the all of the text from the body of the monster entry', async () => {
-        const browser = await puppeteerScraper()
-        const page = await browser.newPage();
 
-        await page.goto('https://pokedex-5e.herokuapp.com/');
-        await page.type('input[type="text"]', 'bulba');
-        await page.click('div > .space-y-4')
+        await pokeScrapper.page.type('input[type="text"]', 'bulba');
+        await pokeScrapper.page.click('div > .space-y-4')
 
-        const elements = await page.$$("div > .font-bold" )
+        const elements = await pokeScrapper.page.$$("div > .font-bold" )
 
         let textArray = []
 
-        elements.forEach(async (element) => {
-            textArray.push(await page.evaluate(el => el.textContent, element))
-        })
+        const elementTextPromise = elements.map(async (element) =>
+            await pokeScrapper.page.evaluate(el => el.textContent, element)
+        )
 
-        await browser.close();
+        textArray = await Promise.all(elementTextPromise)
+
+        await pokeScrapper.close()
 
         expect(textArray.length).toBeGreaterThan(0)
 
