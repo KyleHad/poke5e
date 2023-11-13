@@ -17,17 +17,17 @@ Current Progress: (not final and will be changing future steps as I realize I'm 
 
 1: Planing
 
-2: Scraper PoC <-----
+2: Scraper PoC 
 
-3: Database Creation (IaC) Postgres
+3: Create full scraper <-----
 
-4: Setup Queries
+4: Create a function that returns a mon with all information that the heroku dex would return
 
-5: Create a function that returns a mon with all information that the heroku dex would return
+5: Create function that return a readable output out of the previous function
 
-6: Create function that return a readable output out of the previous function
+6: Database Creation (IaC) Postgres
 
-7: Create full scraper
+7: Setup Queries
 
 8: Finish Database Setup
 
