@@ -31,8 +31,7 @@ describe('puppeteer', () => {
 
         const bulbaPath = basePath + "bulba.png"
 
-        await pokeScrapper.page.type('input[type="text"]', 'bulba');
-        await pokeScrapper.page.click('div > .space-y-4')
+        await pokeScrapper.selectMon('bulba')
         await pokeScrapper.page.screenshot({ path: bulbaPath, optimizeForSpeed: true });
 
         await pokeScrapper.close()
@@ -41,8 +40,7 @@ describe('puppeteer', () => {
     }, 20000)
 
     it('should grab the text from the title of the monster entry', async () => {
-        await pokeScrapper.page.type('input[type="text"]', 'bulba');
-        await pokeScrapper.page.click('div > .space-y-4')
+        await pokeScrapper.selectMon('bulba')
 
         const element = await pokeScrapper.page.$('div > .text-3xl.font-extrabold')
         const text = await pokeScrapper.page.evaluate(el => el.textContent, element)
@@ -55,8 +53,7 @@ describe('puppeteer', () => {
     //TODO:
     it('should grab the all of the text from the body of the monster entry', async () => {
 
-        await pokeScrapper.page.type('input[type="text"]', 'bulba');
-        await pokeScrapper.page.click('div > .space-y-4')
+        await pokeScrapper.selectMon('bulba')
 
         const elements = await pokeScrapper.page.$$("div > .font-bold" )
 
@@ -80,5 +77,13 @@ describe('puppeteer', () => {
 
         expect(data).toContain('<body>')
         expect(data).toContain('</body>')
+    })
+
+    it('should grab all html on the screen after opening all tabs', async () => {
+        await pokeScrapper.selectMon('bulba')
+
+        const data = await pokeScrapper.page.content()
+
+        expect(data).toContain('This Pokémon doubles its STAB bonus when it has 25% or less of its maximum health')
     })
 })

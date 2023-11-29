@@ -12,6 +12,13 @@ export class PokeScrapper {
         return new PokeScrapper(browser, page)
     }
 
+    async selectMon(
+        name: string
+    ) {
+        await this.page.type('input[type="text"]', name);
+        await this.page.click('div > .space-y-4')
+    }
+
     async close(){
         await this.browser.close()
     }
