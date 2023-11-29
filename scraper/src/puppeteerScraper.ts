@@ -6,7 +6,7 @@ export class PokeScrapper {
     }
 
     static async startUp(){
-        const browser =  await puppeteer.launch()
+        const browser =  await puppeteer.launch({headless: 'new'})
         const page = await browser.newPage()
         await page.goto('https://pokedex-5e.herokuapp.com/', { waitUntil: 'networkidle0' })
         return new PokeScrapper(browser, page)

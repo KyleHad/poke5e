@@ -85,5 +85,9 @@ describe('puppeteer', () => {
         const data = await pokeScrapper.page.content()
 
         expect(data).toContain('This Pokémon doubles its STAB bonus when it has 25% or less of its maximum health')
+
+        expect(data).toContain('You rush forward and slam into a creature. Make a melee attack roll against a target, doing normal damage on a hit.')
+
+        expect(data).toContain('You send a downpour of potent, poisonous rain in a 5 foot radius, centered on a point within range. Targets in the area must make a CON save against your MOVE DC or become poisoned. Creatures poisoned by this move take double the normal poison damage.')
     })
 })
