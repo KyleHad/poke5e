@@ -74,4 +74,11 @@ describe('puppeteer', () => {
 
 
     }, 20000)
+
+    it('should grab all html on the screen', async () => {
+        const data = await pokeScrapper.page.content()
+
+        expect(data).toContain('<body>')
+        expect(data).toContain('</body>')
+    })
 })
