@@ -82,6 +82,12 @@ describe('puppeteer', () => {
     it('should grab all html on the screen after opening all tabs', async () => {
         await pokeScrapper.selectMon('bulba')
 
+        const allMoves = await pokeScrapper.page.$$('.font-semibold.text-lg > .pl-3.p-3');
+
+        for (const element of allMoves) {
+            await element.click();
+        }
+
         const data = await pokeScrapper.page.content()
 
         expect(data).toContain('This Pokémon doubles its STAB bonus when it has 25% or less of its maximum health')
